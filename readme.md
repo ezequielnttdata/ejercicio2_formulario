@@ -38,3 +38,5 @@ Vista "Mis solicitudes" ordenada por fecha de creación descendente.
 
 Este formulario está diseñado para cumplir con los requisitos del ejercicio E2 (Formulario + BBDD).
 
+### Video demostración:
+[Ver video](https://github.com/ezequielnttdata/ejercicio2_formulario/releases/tag/v1.0)
