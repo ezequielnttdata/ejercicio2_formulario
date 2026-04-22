@@ -1,0 +1,5 @@
+name: Webform Unique Email
+type: module
+description: Valida emails unicos en Webform
+core_version_requirement: ^11
+package: Custom

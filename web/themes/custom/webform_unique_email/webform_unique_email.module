@@ -1,0 +1,40 @@
+<?php
+
+use Drupal\webform\WebformSubmissionForm;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Validación personalizada para Webform.
+ */
+function webform_unique_email_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  if (strpos($form_id, 'webform_submission') !== FALSE) {
+
+    $form['#validate'][] = 'webform_unique_email_validate_email';
+  }
+}
+
+/**
+ * Validar email para que sea único.
+ */
+function webform_unique_email_validate_email(&$form, FormStateInterface $form_state) {
+
+  $email = $form_state->getValue('email');
+
+  if (!$email) {
+    return;
+  }
+
+  $database = \Drupal::database();
+
+  $query = $database->select('webform_submission_data', 'w');
+  $query->fields('w', ['sid']);
+  $query->condition('name', 'email');
+  $query->condition('value', $email);
+
+  $exists = $query->countQuery()->execute()->fetchField();
+
+  if ($exists > 0) {
+    $form_state->setErrorByName('email', 'Este email ya está registrado, intentalo de nuevo.');
+  }
+}
